@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent Price per Night Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {background-color: #eff2f9;}
+
+        body .table thead th,
+        body .table tbody td,
+        body .table tbody th {
+            background-color: #eff2f9;
+        }
+    </style>
+</head>
+
+<body class="container mt-5">
+
+    <h1 class="mb-4">Rent Price per Night Prediction - Manual Data</h1>
+    <form id="manualForm" action="/manual_predict" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="bairro_group" class="form-label">Neighborhood Group:</label>
+            <select class="form-control" name="bairro_group" placeholder="Select Bairro Group" required>
+                <option class="placeholder" selected disabled value="">Select Neighborhood Group</option>
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="latitude" class="form-label">Latitude [degrees]:</label>
+            <input type="number" class="form-control" name="latitude" step="any" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="longitude" class="form-label">Longitude [degrees]:</label>
+            <input type="number" class="form-control" name="longitude" step="any" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="room_type" class="form-label">Room Type:</label>
+            <select class="form-control" name="room_type" placeholder="Select Room Type" required>
+                <option class="placeholder" selected disabled value="">Select Room Type</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="minimo_noites" class="form-label">Min Nights:</label>
+            <input type="number" class="form-control" name="minimo_noites" min="1" step="any" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="numero_de_reviews" class="form-label">Number of Reviews:</label>
+            <input type="number" class="form-control" name="numero_de_reviews" min="0" step="any" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="calculado_host_listings_count" class="form-label">Number of listings of host:</label>
+            <input type="number" class="form-control" name="calculado_host_listings_count" min="1" step="any" required>
+        </div>
+
+        <div class="mb-3 d-flex">
+            <button type="submit" class="btn btn-primary me-2">Predict with manual data</button>
+            <a href="/" class="btn btn-secondary ms-2">Back</a>
+        </div>
+    </form>
+
+    {% if prediction %}
+    <h2 class="mt-4">
+        Prediction: {{ prediction }}
+    </h2>
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var neighborhood_group = document.querySelector('select[name="bairro_group"]');
+            var neighborhood_group_values = ['Manhattan', 'Brooklyn', 'Queens', 'Staten Island', 'Bronx'];
+
+            neighborhood_group_values.forEach(function (option) {
+                var optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = option;
+                neighborhood_group.appendChild(optionElement);
+            });
+
+            var room_type = document.querySelector('select[name="room_type"]');
+            var room_type_values = ['Entire home/apt', 'Private room', 'Shared room'];
+
+            room_type_values.forEach(function (option) {
+                var optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = option;
+                room_type.appendChild(optionElement);
+            });
+        });
+    </script>
+</body>
+</html>

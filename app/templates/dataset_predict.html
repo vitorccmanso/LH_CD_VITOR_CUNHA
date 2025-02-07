@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent Price per Night Prediction - Dataset</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {background-color: #eff2f9;}
+
+        body .table thead th,
+        body .table tbody td,
+        body .table tbody th {
+            background-color: #eff2f9;
+        }
+    </style>
+</head>
+
+<body class="container mt-5">
+    <h1 class="mb-4">Rent Price per Night Prediction - Dataset</h1>
+    <form id="uploadForm" action="/dataset_predict" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="file" class="form-label">Upload Dataset:</label>
+            <input type="file" class="form-control" name="file" accept=".csv" required>
+            <small class="form-text text-muted">
+                Make sure that the dataset doesn't have NaN values and contains all these columns:
+                <ul>
+                    <li>bairro_group</li>
+                    <li>latitude</li>
+                    <li>longitude</li>
+                    <li>room_type</li>
+                    <li>minimo_noites</li>
+                    <li>numero_de_reviews</li>
+                    <li>calculado_host_listings_count</li>
+                </ul>
+            </small>
+        </div>
+        {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+        {% endif %}
+        <div class="mb-3 d-flex">
+            <button type="submit" class="btn btn-primary me-2">Predict with Dataset</button>
+            <a href="/" class="btn btn-secondary ms-2">Back</a>
+            {% if predictions %}
+            <a href="/download_csv" class="btn btn-success ms-2">Download CSV</a>
+            {% endif %}
+        </div>
+    </form>
+
+    {% if predictions %}
+    <div class="mt-4">
+        <h2>Results:</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    {% for col in predictions[0].keys() %}
+                        <th scope="col">{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in predictions %}
+                <tr>
+                    {% for value in row.values() %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+</body>
+</html>
