@@ -168,13 +168,13 @@ Using the best model, a prediction of the following data would be **$235.18**:
 
 ## Model Explainability
 
-![Feature_Importance](images/feature_importance.PNG)
+![Feature_Importance](images/feature_importance.png)
 
 When plotting the feature importance for the best model, it's possible to see that the category **Entire home/apt** of  `room_type` is by far the most important feature. When the values of this feature are permutated, `MAE` tends to increase by almost 30. The created feature `distance_to_empire_state` is the clear second most important feature.
 
 Additionally, an analysis using SHAP was made, to see the impact of feature values on the prediction of the model.
 
-![Shap](images/shap.PNG)
+![Shap](images/shap.png)
 
 The rank of important features for the model calculated by SHAP is in line with the other way used previously, by permuting the values of the features. Using this graph, it's possible to see how each feature contributed to the model's predictions. The colors change depending on the value of the feature, with higher values being red and lower values being blue. With this, the x-axis shows the impact of that value on the model output. From this, it's possible to draw a few conclusions:
 
